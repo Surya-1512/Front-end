@@ -191,13 +191,8 @@ BackEnd Repo's : 1. TryOn Repo : https://github.com/Surya-1512/TryYours-Virtual-
 2. Flask App Repo : https://github.com/Surya-1512/sample
 
 
-
-
-
-
-
 In Case any doubt or assistance in running feel free to reach me out 
-@LinkedIn : [Your LinkedIn Profile]([https://www.linkedin.com/in/your-profile/](https://www.linkedin.com/in/surya-s-s-1512-/)https://www.linkedin.com/in/surya-s-s-1512-/)
+@LinkedIn : https://www.linkedin.com/in/surya-s-s-1512-/
 @EMail : suryass1215@gmail.com
 
 
