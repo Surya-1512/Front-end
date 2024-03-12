@@ -187,100 +187,18 @@ For Backend take a look at this repo : https://colab.research.google.com/drive/1
 ```
   POST /imageData
 ```
-
-
-## Screenshots
-
-![App Screenshot 1](https://i.postimg.cc/Fs1ksBhB/Rapid-Crew-Brave-19-04-2023-22-57-40.png)
-
-![App Screenshot 2](https://i.postimg.cc/qMYhtxRM/Rapid-Crew-Brave-19-04-2023-22-57-48.png)
-
-![App Screenshot 3](https://i.postimg.cc/9Q74ywRP/Rapid-Crew-Brave-19-04-2023-22-57-50.png)
-
-![App Screenshot 4](https://i.postimg.cc/1R74TrDc/Rapid-Crew-Brave-19-04-2023-22-57-59.png)
-
-![App Screenshot 5](https://i.postimg.cc/vH1DdxzR/Rapid-Crew-Brave-19-04-2023-22-58-10.png)
-
-![App Screenshot 6](https://i.postimg.cc/fLBkMxps/Rapid-Crew-Brave-19-04-2023-22-58-22.png)
-
-![App Screenshot 7](https://i.postimg.cc/8cY56TTn/Rapid-Crew-Brave-19-04-2023-22-58-26.png)
-
-![App Screenshot 8](https://i.postimg.cc/tCLJRRSs/Rapid-Crew-Brave-19-04-2023-22-58-36.png)
-
-![App Screenshot 9](https://i.postimg.cc/TPxPm7XG/Rapid-Crew-Brave-19-04-2023-22-58-46.png)
-
-![App Screenshot 10](https://i.postimg.cc/XJVpM22x/Rapid-Crew-Brave-19-04-2023-22-58-55.png)
-
-![App Screenshot 11](https://i.postimg.cc/SxCsn03D/Rapid-Crew-Brave-19-04-2023-22-59-02.png)
-
-![App Screenshot 12](https://i.postimg.cc/Dzcwcr2G/Rapid-Crew-Brave-19-04-2023-22-59-09.png)
-
-![App Screenshot 13](https://i.postimg.cc/PxrrVCxR/Rapid-Crew-Brave-19-04-2023-22-59-18.png)
-
-![App Screenshot 14](https://i.postimg.cc/ydQ6M73Y/Rapid-Crew-Brave-19-04-2023-23-00-10.png)
-
-![App Screenshot 15](https://i.postimg.cc/hvX4gNV8/Rapid-Crew-Brave-19-04-2023-23-00-16.png)
-
-![App Screenshot 16](https://i.postimg.cc/2ygk5Txs/Rapid-Crew-Brave-19-04-2023-23-00-26.png)
-
-![App Screenshot 17](https://i.postimg.cc/L6Z4WK92/Rapid-Crew-Brave-19-04-2023-23-00-50.png)
-
-![App Screenshot 18](https://i.postimg.cc/66P5z5NM/Rapid-Crew-Brave-19-04-2023-23-01-00.png)
+BackEnd Repo's : 1. TryOn Repo : https://github.com/Surya-1512/TryYours-Virtual-Try-On
+2. Flask App Repo : https://github.com/Surya-1512/sample
 
 
 
 
 
-## Feature Engineering
-In my myntra dataset, it has many null values available and data of columns were not suitable for training the model so for the efficient model training, feature engineering of the dataset was needed. I have created various functions for perticular column to preprocess the data. 
 
 
-
-
-## Popularity Based Recommandation:
-As the name suggests Popularity based recommendation system works with the trend. By using ratings dataset, I found total no. of ratings on each products and average ratings of products. Then I separete products based on threshold value which I applied on totalRatings and sort products in decending order of average rating. This is how I got popular 100 products.
-
-
-## Content Based Recommandation:
-In this recommender system the content of the product (actual_color, dominant_color, product_type, product_details, complete_the_look, inventory, specifications etc) is used to find its similarity with other products.
-I combined content of the product into one corpus by doing preprocessing on text and then apply lemmatization and remove stopwords from corpus of data using nltk (natural language processing toolkit) library.
-
-Then by TfidfVectorizer in sklearn library, I convert my corpus of Data into vectors.
-
-Now, I applied sigmoid_kernel through sklearn, I find the cosine similarity between products.
-
-## Similarity score
-How does it decide which item is most similar to the item user likes? Here come the similarity scores.
-
-It is a numerical value ranges between zero to one which helps to determine how much two items are similar to each other on a scale of zero to one. This similarity score is obtained measuring the similarity between the text details of both of the items. So, similarity score is the measure of similarity between given text details of two items. This can be done by cosine-similarity.
-
-
-Then the products that are most likely to be similar are recommended.
-
-## How does Cosine Similarity Works??
-
-![Cosine Similarity](https://i.ibb.co/HXN6mkQ/cosine-similarity.png)
-
-The cosine similarity metric is used to determine how similar documents are regardless of their size. It estimates the cosine of the angle formed by two vectors projected in a multi-dimensional space mathematically. Because of the cosine similarity, even if two comparable documents are separated by the Euclidean distance (due to the size of the documents), they are likely to be orientated closer together. The higher the cosine similarity, the smaller the angle.
-
-![Cosine Similarity](https://i.ibb.co/H7NWFbv/cosine-similarity2.png)
-
-
-## Collaborative Filtering
-Collaborative Filtering doesn’t need anything else except users’ historical preference on a set of items. Because it’s based on historical data, the core assumption here is that the users who have agreed in the past tend to also agree in the future.
-
-
-Basically, the idea is to find the most similar users to your target user (nearest neighbors) and weight their ratings of an item as the prediction of the rating of this item for target user.
-
-## Matrix Factorization
- What matrix factorization eventually gives us is how much a user is aligned with a set of latent features, and how much a movie fits into this set of latent features. 
-
- 
-![Cosine Similarity](https://i.ibb.co/ZWKP64j/cf.png)
-
-
-## Product Recommandation from Image
-Resnet is a pre trained image processing model. I used resnet which is a backbone of computer vision tasks to extract features from the images available in my dataset. I also extract features of uploaded image using resnet model. Then using Nearest Neighbour classifier I get the nearest similar products and show it to user.
+In Case any doubt or assistance in running feel free to reach me out 
+@LinkedIn : [Your LinkedIn Profile]([https://www.linkedin.com/in/your-profile/](https://www.linkedin.com/in/surya-s-s-1512-/)https://www.linkedin.com/in/surya-s-s-1512-/)
+@EMail : suryass1215@gmail.com
 
 
 
