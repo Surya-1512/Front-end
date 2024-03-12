@@ -16,7 +16,7 @@ const Weather = () => {
 
         // Use OpenCage Geocoding API to get location details based on coordinates
         const { data } = await axios.get(
-          `https://api.opencagedata.com/geocode/v1/json?key=35f694f474c04af18f23ee0edd5724d3&q=${position.coords.latitude}+${position.coords.longitude}&language=en&pretty=1`
+          `https://api.opencagedata.com/geocode/v1/json?key=#=${position.coords.latitude}+${position.coords.longitude}&language=en&pretty=1`
         );
 
         // Get the city name from the OpenCage response
@@ -24,7 +24,7 @@ const Weather = () => {
 
         // Use OpenWeatherMap API to get current weather based on the city name
         const weatherResponse = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=dd7121dd2883396ee0395b4e0d85a1a5`
+          `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=#`
         );
 
         setWeatherData(weatherResponse.data);
