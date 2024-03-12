@@ -187,13 +187,14 @@ For Backend take a look at this repo : https://colab.research.google.com/drive/1
 ```
   POST /imageData
 ```
-BackEnd Repo's : 1. TryOn Repo : https://github.com/Surya-1512/TryYours-Virtual-Try-On
+BackEnd Repo's :
+1. TryOn Repo : https://github.com/Surya-1512/TryYours-Virtual-Try-On
 2. Flask App Repo : https://github.com/Surya-1512/sample
 
 
-In Case any doubt or assistance in running feel free to reach me out 
-@LinkedIn : https://www.linkedin.com/in/surya-s-s-1512-/
-@EMail : suryass1215@gmail.com
+In Case of any doubts or if you need assistance in running the project, feel free to reach out to me:
+- **LinkedIn:** [Surya S S](https://www.linkedin.com/in/surya-s-s-1512-/)
+- **Email:** suryass1215@gmail.com
 
 
 
