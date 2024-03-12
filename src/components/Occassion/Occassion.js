@@ -10,7 +10,7 @@ const Occasion = () => {
         <DeepChat
           directConnection={{
             openAI: {
-              key: "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",
+              key: "Your_openAI_Key",
               chat: {
                 max_tokens: 500,
                 system_prompt: "Assist me with anything you can"
