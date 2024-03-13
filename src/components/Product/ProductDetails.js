@@ -1,369 +1,192 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios"; // Assuming that axios.js is in the same directory
-import backendUrl from "./axios";
-// For Styling
-import { Box, Typography, makeStyles } from "@material-ui/core";
-import { Row, Col, Container, Accordion } from "react-bootstrap";
+import React, { useState } from "react";
+import { Box, makeStyles, Typography, Button } from "@material-ui/core";
+import { Row } from "react-bootstrap";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import backendUrl from "../Product/axios";
 
 // Components
-import ProductCard from "./ProductCard";
-import StarRating from "./StarRating";
+import ProductCard from "../Product/ProductCard";
 
-// CSS- Material UI
-const useStyles = makeStyles((theme) => ({
-  img: {
+const Input = styled("input")({
+  display: "none",
+});
+
+const useStyles = makeStyles({
+  rec: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "30px",
+    padding: "0 40px",
+  },
+  inp: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  recImage: {
     width: "350px",
     height: "350px",
-    [theme.breakpoints.down("sm")]: {
-      width: "350px",
-      height: "350px",
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "300px",
-      height: "300px",
-    },
+    objectFit: "contain",
+    marginTop: "40px",
   },
-  main: {
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  },
-  header: {
-    fontSize: "30px",
-    fontWeight: "bold",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "20px",
-    },
-  },
-  type: {
-    fontSize: "20px",
+  btn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "15px",
   },
   txt: {
-    color: "grey",
-  },
-  headTxt: {
-    fontSize: "16px",
+    marginTop: "40px",
+    fontSize: "30px",
     fontWeight: "bold",
   },
-  headSpan: {
-    fontWeight: "normal",
-    fontSize: "15px",
-  },
-  price: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    color: "green",
-    marginTop: "10px",
-  },
-  discount: {
-    fontSize: "18px",
-  },
-}));
+});
 
-const ProductDetails = () => {
+function Recommandation() {
   const classes = useStyles();
 
-  // Get the title from url
-  const { title } = useParams();
-
-  // State for Product Details
-  const [similarProd, setSimilarProd] = useState([]);
-  const [recommandProd, setRecommandProd] = useState([]);
+  const [img, setImg] = useState(null);
+  const [prodData, setProdData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [thisProduct, setThisProduct] = useState({});
 
-  // Set data for similar Products
-  const setPData = (data) => {
-    setSimilarProd(data);
-  };
-
-  // Set data for recommand Products
-  const setRData = (data) => {
-    setRecommandProd(data);
-  };
-
-  // Set data of the current product
-  const setProd = (data) => {
-    setThisProduct(data);
-  };
-
-  // Get the data from the API
-  const getSimilarProd = async () => {
+  const givReco = async (e) => {
     setLoading(true);
 
-    // Get all products data from the API
-    const all = await axios.get("${backendUrl}/allProducts");
+    try {
+      const response = await fetch(`${backendUrl}/imageData`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: img }),
+      });
 
-    // fetch the current product data using product id from all products data
-    setProd(all.data.filter((item) => item.title === title));
-
-    setLoading(false);
-
-    // Passing title to the API to get all similar products to the current product
-    const response = await axios.get(`${backendUrl}/prod/${title}`);
-
-    // Set the data to the state
-    setPData(response.data);
-
-    // Passing title to the API to get recommandation to the current product
-    const response2 = await axios.get(`${backendUrl}/recommand/${title}`);
-    setRData(response2.data);
+      if (response.ok) {
+        const data = await response.json();
+        setProdData(data);
+      } else {
+        console.error("Failed to get recommendations");
+      }
+    } catch (error) {
+      console.error("Error while fetching recommendations:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Every time page reloads, This will be executed first
-  useEffect(() => {
-    getSimilarProd();
-  }, [title]);
+  const imageHandler = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImg(reader.result);
+      }
+    };
+
+    reader.readAsDataURL(file);
+  };
 
   return (
     <>
-      {/* if get the data then show otherwise loading  */}
-      {loading ? (
-        <>
-          <h4>Loading...</h4>
-        </>
-      ) : (
-        <>
-          <Container>
-            <Row>
-              {/* Product Images */}
-              <Col xs={12} md={7} xl={7} style={{ marginTop: " 40px" }}>
-                <Row>
-                  <Col className={classes.main}>
-                    <img
-                      src={thisProduct[0].img1}
-                      alt="product"
-                      className={classes.img}
-                    />
-                  </Col>
-                  <Col className={classes.main}>
-                    <img
-                      src={thisProduct[0].img2}
-                      alt="product"
-                      className={classes.img}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className={classes.main}>
-                    <img
-                      src={thisProduct[0].img3}
-                      alt="product"
-                      className={classes.img}
-                    />
-                  </Col>
-                  <Col className={classes.main}>
-                    <img
-                      src={thisProduct[0].img4}
-                      alt="product"
-                      className={classes.img}
-                    />
-                  </Col>
-                </Row>
-              </Col>
+      <p
+        style={{
+          textAlign: "center",
+          marginTop: "40px",
+          fontSize: "30px",
+          fontWeight: "bold",
+        }}
+      >
+        Get Recommendation
+      </p>
+      <Box className={classes.rec}>
+        <Box className={classes.inp}>
+          <label htmlFor="contained-button-file">
+            <Input
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={imageHandler}
+            />
+            <Button variant="contained" component="span" color="primary">
+              Upload
+            </Button>
+          </label>
+          <label htmlFor="icon-button-file">
+            <Input
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              onChange={imageHandler}
+            />
+            <IconButton
+              color="primary"
+              aria-label="upload picture"
+              component="span"
+            >
+              <PhotoCamera />
+            </IconButton>
+          </label>
+        </Box>
 
-              {/* Product Data */}
-              <Col xs={12} md={5} xl={5}>
-                <Box className="container" style={{ marginTop: "40px" }}>
-                  <Typography className={classes.header}>
-                    {thisProduct[0].title}
-                  </Typography>
-                  <Typography className={classes.type}>
-                    {thisProduct[0].product_type}
-                  </Typography>
+        {img ? (
+          <>
+            <img src={img} alt="Picture" className={classes.recImage} />
+            <Box className={classes.products}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                onClick={givReco}
+                className={classes.btn}
+              >
+                Recommendation
+              </Button>
+
+              {loading ? (
+                <></>
+              ) : (
+                <>
                   <Typography className={classes.txt}>
-                    By the WearNow
+                    Products For You
                   </Typography>
 
-                  <hr />
-                  <Typography className={classes.price}>
-                    ₹ {thisProduct[0].variant_price}
-                    <span
-                      style={{
-                        textDecoration: "line-through",
-                        marginLeft: "10px",
-                      }}
-                    >
-                      ₹ {thisProduct[0].variant_compare_at_price}
-                    </span>
-                    <span
-                      className={classes.discount}
-                      style={{ color: "red", marginLeft: "10px" }}
-                    >
-                      {(
-                        ((thisProduct[0].variant_compare_at_price -
-                          thisProduct[0].variant_price) /
-                          thisProduct[0].variant_compare_at_price) *
-                        100
-                      ).toFixed()}
-                      %OFF
-                    </span>
-                  </Typography>
-                  <Typography className={classes.txt}>
-                    Price inclusive of all taxes
-                  </Typography>
-                  <Typography
-                    className={classes.type}
-                    style={{ marginTop: "20px" }}
+                  <Box
+                    className="container"
+                    style={{ marginTop: "20px", marginBottom: "30px" }}
                   >
-                    Enter Your Ratings
-                  </Typography>
-
-                  <Box style={{ marginTop: "10px" }}>
-                    <StarRating />
+                    <Row xs={1} md={2} className="g-4">
+                      {prodData.map((item) => {
+                        return (
+                          <ProductCard
+                            id={item.product_id}
+                            key={item.product_id}
+                            url={item.img1}
+                            title={item.title}
+                            pTitle={item.title}
+                            type={item.product_type}
+                            price={item.variant_price}
+                            aPrice={item.variant_compare_at_price}
+                          />
+                        );
+                      })}
+                    </Row>
                   </Box>
-
-                  {/* Product Details */}
-                  <Box style={{ marginTop: "20px" }}>
-                    <Accordion defaultActiveKey={["0"]} alwaysOpen>
-                      <Accordion.Item eventKey="0">
-                        <Accordion.Header>Product Details</Accordion.Header>
-                        <Accordion.Body>
-                          <Typography className={classes.headTxt}>
-                            Product Type:{" "}
-                            <span className={classes.headSpan}>
-                              {" "}
-                              {thisProduct[0].product_type}
-                            </span>
-                          </Typography>
-                          <Typography className={classes.headTxt}>
-                            Brand:{" "}
-                            <span className={classes.headSpan}>
-                              {" "}
-                              {thisProduct[0].brand}
-                            </span>
-                          </Typography>
-                          <br />
-                          <Typography className={classes.headTxt}>
-                            Material & Care:{" "}
-                            <span className={classes.headSpan}>
-                              {" "}
-                              {thisProduct[0].dominant_material}
-                            </span>
-                          </Typography>
-                          <br />
-                          <Typography className={classes.headTxt}>
-                            Color:{" "}
-                            <span className={classes.headSpan}>
-                              {" "}
-                              {thisProduct[0].actual_color}
-                            </span>
-                          </Typography>
-
-                          <Typography className={classes.headTxt}>
-                            Dominant Color:{" "}
-                            <span className={classes.headSpan}>
-                              {" "}
-                              {thisProduct[0].dominant_color}
-                            </span>
-                          </Typography>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="1">
-                        <Accordion.Header>Product Description</Accordion.Header>
-                        <Accordion.Body>
-                          <Typography className={classes.headTxt}>
-                            Product Details:{" "}
-                            <span className={classes.headSpan}>
-                              {thisProduct[0].product_details}
-                            </span>
-                          </Typography>
-                          <br />
-                          <Typography className={classes.headTxt}>
-                            Complete The Look:{" "}
-                            <span className={classes.headSpan}>
-                              {thisProduct[0].complete_the_look}
-                            </span>
-                          </Typography>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion>
-                  </Box>
-                </Box>
-              </Col>
-            </Row>
-          </Container>
-
-          {/* show similar Products */}
-          <Box
-            className="container"
-            style={{ marginTop: "40px", marginBottom: "30px" }}
-          >
-            <Typography
-              style={{
-                textAlign: "left",
-                marginTop: "20px",
-                fontSize: "30px",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              Similar Products
-            </Typography>
-            <Row xs={1} md={2} className="g-4">
-              {loading ? (
-                <h4>Loading...</h4>
-              ) : (
-                similarProd.map((item) => {
-                  return (
-                    <ProductCard
-                      id={item.product_id}
-                      key={item.product_id}
-                      url={item.img1}
-                      title={item.title}
-                      pTitle={item.title}
-                      type={item.product_type}
-                      price={item.variant_price}
-                      aPrice={item.variant_compare_at_price}
-                    />
-                  );
-                })
+                </>
               )}
-            </Row>
-          </Box>
-
-          {/* show recommand products */}
-          <Box className="container" style={{ marginTop: "40px" }}>
-            <Typography
-              style={{
-                textAlign: "left",
-                marginTop: "20px",
-                fontSize: "30px",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              People Are Also Buying
-            </Typography>
-            <Row xs={1} md={2} className="g-4">
-              {loading ? (
-                <h4>Loading...</h4>
-              ) : (
-                recommandProd.map((item) => {
-                  return (
-                    <ProductCard
-                      id={item.product_id}
-                      key={item.product_id}
-                      url={item.img1}
-                      title={item.title}
-                      pTitle={item.title}
-                      type={item.product_type}
-                      price={item.variant_price}
-                      aPrice={item.variant_compare_at_price}
-                    />
-                  );
-                })
-              )}
-            </Row>
-          </Box>
-        </>
-      )}
+            </Box>
+          </>
+        ) : (
+          <> </>
+        )}
+      </Box>
     </>
   );
-};
+}
 
-export default ProductDetails;
+export default Recommandation;
