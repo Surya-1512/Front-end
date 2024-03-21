@@ -90,24 +90,6 @@ Go to requirements.txt file in the same folder and install all required dependen
 
 
 
-## Environment Variables for firebase
-
-To run this project, you will need to add the following environment variables to your firebase.js file
-
-`API_KEY`: "AIzaSyDapzyVgu5Nv4i3s7TIw5fKFIeLS4YDB9g",
-
-`authDomain` : "rapid-crew-1947c.firebaseapp.com",
-
-`projectId`: "rapid-crew-1947c",
-
-`storageBucket`: "rapid-crew-1947c.appspot.com",
-
-`messagingSenderId`: "674640692953",
-
-`appId`: "1:674640692953:web:c8e98832e1fa86a3ffa0c8",
-
-`measurementId`: "G-QX9814DMG9",
-
 
 
 
@@ -126,7 +108,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Backend
 
-For Backend take a look at this repo : https://colab.research.google.com/drive/1tsAChJ4rytxk1RPRS8fdrgS8nB1o505I#scrollTo=hLqmAUF4Nh-A
+For Backend take a look at this Notebook : https://colab.research.google.com/drive/1tsAChJ4rytxk1RPRS8fdrgS8nB1o505I#scrollTo=hLqmAUF4Nh-A
 
 ## API Reference
 
